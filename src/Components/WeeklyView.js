@@ -6,8 +6,8 @@ const WeeklyView = ({ orders }) => {
   const [currentWeek, setCurrentWeek] = useState(moment());
   const [selectedOrder, setSelectedOrder] = useState(null); // Stav pre vybranú objednávku
 
-  const startOfWeek = currentWeek.startOf('week');
-  const weekDays = Array(7).fill(0).map((_, index) => moment(startOfWeek).add(index, 'days'));
+  const startOfWeek = currentWeek.clone().startOf('week');
+  const weekDays = Array(7).fill(0).map((_, index) => startOfWeek.clone().add(index, 'days'));
 
   const getOrdersForDay = (date) => {
     return orders.filter(order => moment(order.deadline).isSame(date, 'day'));
