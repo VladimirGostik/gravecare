@@ -1,0 +1,59 @@
+.text-shadow-lg {
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+  }
+  
+  .text-border {
+    text-stroke: 1px black;
+  }
+  
+  /* Custom styles for the calendar */
+.react-calendar {
+  background: white;
+  border: none;
+  border-radius: 15px;
+}
+
+.react-calendar__tile--active {
+  background-color: #6b46c1 !important; /* Custom purple */
+  color: white !important;
+}
+
+.react-calendar__tile {
+  border-radius: 50%; /* Zabezpečí dokonale guľatý tvar */
+  width: 40px; /* Môžete upraviť veľkosť podľa vašej potreby */
+  height: 50px; /* Rovnaká hodnota pre šírku aj výšku, aby bol tvar štvorcový */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.react-calendar__tile:hover:not(.react-calendar__tile--active) {
+  background-color: #e2e8f0; /* Light hover effect */
+  border-radius: 50px;
+}
+
+.react-calendar__tile--now {
+  background: #68d391 !important; /* Highlight for today */
+  color: white !important;
+}
+/* Custom styles for the calendar */
+.disabled-date {
+  background-color: #f87171 !important; /* Tailwind's red-400 color */
+  color: white !important;
+  pointer-events: none; /* Disable interaction */
+}
+
+.react-calendar__tile--now {
+  background-color: #4f46e5 !important; /* Tailwind's indigo-600 color */
+  color: white !important;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.transition-max-height {
+  transition: max-height 0.5s ease-in-out;
+}
