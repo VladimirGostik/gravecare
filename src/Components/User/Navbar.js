@@ -52,14 +52,12 @@ const Navbar = ({ companyLogo }) => {
     fetchUnreviewedOrders();
   }, [fetchByCustomerNotreviewedId]);
 
-  console.log(unreviewedOrdersCount);
-
   return (
     <nav className="bg-customPurpleNavbar p-3 rounded-[40px] shadow-lg mx-10">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo Gravecare */}
         <div className="ml-6 text-4xl font-bold text-white text-shadow-lg text-border">
-          <Link to="/business/orders/confirm">Gravecare</Link>
+          <Link to="/business/orders/confirm">Gravecare cikula</Link>
         </div>
 
         {/* Podnikateľské logo alebo predvolený obrázok */}

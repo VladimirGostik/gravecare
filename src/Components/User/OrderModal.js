@@ -182,7 +182,7 @@ const OrderModal = ({ entrepreneur, services, onClose }) => {
           )}
 
           {/* Total */}
-          <div className="mt-4 text-lg font-bold">Celkom: {totalPrice} EUR</div>
+          <div className="mt-4 text-lg font-bold">Celkom csetko: {totalPrice} EUR</div>
         </div>
 
         {/* Right Part */}
