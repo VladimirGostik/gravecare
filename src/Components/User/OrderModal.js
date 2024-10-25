@@ -3,9 +3,14 @@ import Modal from './Modal'; // Presuming you have a Modal component
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useService } from '../../Context/ServiceContext'; // Import useService for cemeteriesData
+import { useAuth } from '../../Context/AuthContext'; // Import useService for cemeteriesData
+
+import { FaInfoCircle } from 'react-icons/fa';
 
 const OrderModal = ({ entrepreneur, services, onClose }) => {
+  console.log(entrepreneur);
   const { cemeteriesData } = useService();
+  const { personalData } = useAuth();
 
   const [currentStep, setCurrentStep] = useState(1);
 
@@ -41,6 +46,10 @@ const OrderModal = ({ entrepreneur, services, onClose }) => {
       // Validation for step 1 (optional)
       setCurrentStep(2);
     }
+    setCustomerName(personalData.name);
+    setCustomerAddress(personalData.address);
+    setCustomerEmail(personalData.email);
+    setCustomerPhone(personalData.phoneNumber);
   };
 
   const handlePreviousStep = () => {
@@ -91,160 +100,156 @@ const OrderModal = ({ entrepreneur, services, onClose }) => {
 
   // Step 1: Cemetery selection, order description, services, photo, date
   const renderStep1 = () => {
-    // Get unique cemeteries from offered services
     const uniqueCemeteryIds = [...new Set(services.map((service) => service.id_cementery))];
     const availableCemeteries = cemeteriesData.filter((cemetery) =>
       uniqueCemeteryIds.includes(cemetery.id)
     );
-
-    // Available services for the selected cemetery
     const availableServices = services.filter(
       (service) => service.id_cementery === parseInt(selectedCemetery)
     );
 
     return (
-      <div className="flex">
-        {/* Left Part */}
-        <div className="w-[70%] pr-4">
-          <h2 className="text-xl font-bold mb-4">{entrepreneur.name}</h2>
-
-          <div className="flex mb-4">
-            {/* Select Cemetery */}
-            <div className="w-1/2 pr-2">
-              <label className="block mb-2">
-                Vyberte cintorín:
-                <select
-                  className="block w-full mt-1 p-2 border rounded"
-                  value={selectedCemetery}
-                  onChange={(e) => setSelectedCemetery(e.target.value)}
-                >
-                  <option value="">-- Vyberte cintorín --</option>
-                  {availableCemeteries.map((cemetery) => (
-                    <option key={cemetery.id} value={cemetery.id}>
-                      {cemetery.name}, {cemetery.city}
-                    </option>
-                  ))}
-                </select>
-              </label>
+      <div>
+        <div className="text-center px-1">
+          <h1 className="text-3xl font-bold mb-1">Zadajte objednávku</h1>
+        </div>
+        <div className="flex">
+          {/* Left Part */}
+          <div className="w-[70%] pr-4 bg-customPurpleNavbar rounded-[30px] p-2">
+            {/* Provider and Cemetery Selection */}
+            <div className="flex mb-4">
+              <div className="w-1/2 pr-2">
+                <div className="mb-2">
+                  <label className="text-black font-bold pl-2">Poskytovateľ:</label>
+                  <div className="bg-gray-200 rounded-3xl p-1 pl-4">Liesek s.r.o</div>
+                </div>
+                <div className="mb-2">
+                  <label className="text-black font-bold pl-2">Vyberte cintorín:</label>
+                  <select
+                    className="block w-full p-1 pl-4 bg-white border rounded-3xl"
+                    value={selectedCemetery}
+                    onChange={(e) => setSelectedCemetery(e.target.value)}
+                  >
+                    <option value="">Vyberte cintorín</option>
+                    {availableCemeteries.map((cemetery) => (
+                      <option key={cemetery.id} value={cemetery.id}>
+                        {cemetery.name}, {cemetery.city}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <label className="block font-bold pl-2">Služby pre vybraný cintorín:</label>
+              </div>
+              {/* Order Description */}
+              <div className="w-1/2 pl-2 pb-4">
+                <label className="block font-bold">Popis objednávky:</label>
+                <div className="bg-white rounded-3xl h-full">
+                  <textarea
+                    className="block w-full h-full rounded-3xl border-none p-2 focus:outline-none"
+                    placeholder='Zadajte prosim detaily o polohe cintorina...'
+                    value={orderDescription}
+                    onChange={(e) => setOrderDescription(e.target.value)}
+                  />
+                </div>
+              </div>
             </div>
 
-            {/* Order Description */}
-            <div className="w-1/2 pl-2">
-              <label className="block mb-2">
-                Popis objednávky:
-                <input
-                  type="text"
-                  className="block w-full mt-1 p-2 border rounded"
-                  value={orderDescription}
-                  onChange={(e) => setOrderDescription(e.target.value)}
-                />
-              </label>
-            </div>
-          </div>
-
-          {/* Services */}
-          {selectedCemetery && (
-            <div>
-              {availableServices
-                .slice(0, showAllServices ? availableServices.length : 5)
-                .map((service) => {
-                  const isSelected = selectedServices.includes(service);
-                  return (
+            {/* Services */}
+            {selectedCemetery && (
+              <div>
+                {availableServices
+                  .slice(0, showAllServices ? availableServices.length : 5)
+                  .map((service) => (
                     <div
                       key={service.id}
-                      className={`flex items-center mb-2 cursor-pointer ${
-                        isSelected ? 'bg-gray-200' : ''
-                      }`}
+                      className="bg-white rounded-3xl p-1 mt-2 flex items-center justify-between cursor-pointer"
                       onClick={() => handleServiceSelection(service)}
                     >
-                      <div className="w-3/4 flex items-center">
-                        <span className="mr-2">{service.name}</span>
+                      <div className="flex items-center">
+                        <input
+                          type="checkbox"
+                          checked={selectedServices.includes(service)}
+                          onChange={() => handleServiceSelection(service)}
+                          className="w-5 h-5 mx-1 pointer-events-none"
+                        />
+                        <span className="font-bol pl-2">{service.name}</span>
                         <span
-                          className="text-blue-500 cursor-pointer"
+                          className="ml-1 text-blue-500 cursor-pointer"
                           title={service.description}
                         >
-                          <i className="fas fa-info-circle"></i>
+                          <FaInfoCircle size={22} />
                         </span>
                       </div>
-                      <div className="w-1/4 text-right">{service.price}</div>
+                      <div className="ml-auto bg-customPurpleNavbar rounded-3xl p-2">
+                        {service.price}
+                      </div>
                     </div>
-                  );
-                })}
-              {availableServices.length > 5 && !showAllServices && (
-                <button
-                  className="text-blue-500 underline"
-                  onClick={() => setShowAllServices(true)}
-                >
-                  Zobraziť všetky
-                </button>
-              )}
-            </div>
-          )}
+                  ))}
 
-          {/* Total */}
-          <div className="mt-4 text-lg font-bold">Celkom csetko: {totalPrice} EUR</div>
-        </div>
-
-        {/* Right Part */}
-        <div className="w-[30%] pl-4">
-          <label className="block mb-2 text-lg font-bold">Fotka pred:</label>
-          <label
-            className="block cursor-pointer"
-            onClick={() => beforeImageInputRef.current.click()}
-          >
-            <div className="flex justify-center mb-3">
-              {beforeImage ? (
-                <img
-                  src={beforeImage}
-                  alt="Fotka pred"
-                  className="w-30 h-auto rounded-lg shadow-lg"
-                />
-              ) : (
-                <div className="text-center border-[3px] p-6 rounded-2xl">
-                  <img
-                    src="/images/gallery.png"
-                    alt="Žiadna fotka"
-                    className="w-20 h-20 mx-auto"
-                  />
-                  <p className="text-gray-500">Nebola pridaná žiadna fotka</p>
-                </div>
-              )}
-            </div>
-            {beforeImageName && (
-              <p className="text-sm text-gray-600">
-                {truncateFileName(beforeImageName)}
-              </p>
+                {availableServices.length > 5 && !showAllServices && (
+                  <button
+                    className="text-blue-500 underline mt-2"
+                    onClick={() => setShowAllServices(true)}
+                  >
+                    Zobraziť všetky
+                  </button>
+                )}
+              </div>
             )}
-            <input
-              type="file"
-              ref={beforeImageInputRef}
-              className="hidden"
-              accept="image/*"
-              onChange={handleBeforeImageChange}
-            />
-          </label>
-
-          {/* Select Date */}
-          <div className="mt-4">
-            <label className="block mb-2">
-              Vyberte dátum:
-              <DatePicker
-                selected={deadline}
-                onChange={(date) => setDeadline(date)}
-                dateFormat="dd/MM/yyyy"
-                className="block w-full mt-1 p-2 border rounded"
+            {/* Total */}
+            <div className="flex items-center bg-white rounded-3xl p-1 mt-6">
+              <p className="text-lg font-bold pl-2">Celkom:</p>
+              <div className="ml-auto bg-customPurpleNavbar rounded-3xl p-2 font-bold">
+                {totalPrice} EUR
+              </div>
+            </div>
+          </div>
+          {/* Right Part */}
+          <div className="w-[30%] pl-4">
+            <label className="block mb-2 text-lg font-bold">Fotka pred:</label>
+            <label className="block cursor-pointer" onClick={() => beforeImageInputRef.current.click()}>
+              <div className="flex justify-center mb-3">
+                {beforeImage ? (
+                  <img src={beforeImage} alt="Fotka pred" className="w-30 h-auto rounded-lg shadow-lg" />
+                ) : (
+                  <div className="text-center border-[3px] p-6 rounded-2xl">
+                    <img src="/images/gallery.png" alt="Žiadna fotka" className="w-20 h-20 mx-auto" />
+                    <p className="text-gray-500">Nebola pridaná žiadna fotka</p>
+                  </div>
+                )}
+              </div>
+              {beforeImageName && (
+                <p className="text-sm text-gray-600">{truncateFileName(beforeImageName)}</p>
+              )}
+              <input
+                type="file"
+                ref={beforeImageInputRef}
+                className="hidden"
+                accept="image/*"
+                onChange={handleBeforeImageChange}
               />
             </label>
-          </div>
-
-          {/* Next Button */}
-          <div className="mt-4 flex justify-end">
-            <button
-              className="bg-purple-500 text-white px-4 py-2 rounded"
-              onClick={handleNextStep}
-            >
-              Pokračovať
-            </button>
+            {/* Select Date */}
+            <div className="mt-4">
+              <label className="block mb-2">
+                Vyberte dátum:
+                <DatePicker
+                  selected={deadline}
+                  onChange={(date) => setDeadline(date)}
+                  dateFormat="dd/MM/yyyy"
+                  className="block w-full mt-1 p-2 border rounded-3xl"
+                />
+              </label>
+            </div>
+            {/* Next Button */}
+            <div className="mt-4 flex justify-center">
+              <button
+                className="bg-customPurpleNavbar text-black font-bold px-6 py-2 rounded-3xl"
+                onClick={handleNextStep}
+              >
+                Pokračovať
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -258,112 +263,134 @@ const OrderModal = ({ entrepreneur, services, onClose }) => {
     );
 
     return (
-      <div className="flex">
+      <div className="">
         {/* Left Part */}
-        <div className="w-[70%] pr-4">
-          <h2 className="text-xl font-bold mb-4">Fakturačné údaje objednávateľa</h2>
+        <h2 className="text-2xl text-center font-bold ">Fakturačné údaje objednávateľa</h2>
+        <h2 className="text-xl font-bold mb-1 pl-4">Údaje objednávateľa:</h2>
+        <div className="flex">
+          <div className="w-[65%] pr-2">
+            <div className='bg-customPurple rounded-[30px] p-2 mx-auto grid grid-cols-2 gap-1'> {/* Menšie okraje a menšie zaoblenie */}
+              <div>
+                <label className="block ml-1 font-bold text-white text-sm">Meno a priezvisko:</label> {/* Zmenšený margin a písmo */}
+                <div className="bg-white block w-full mt-1 p-1 pl-2 rounded-xl shadow-md text-xs"> {/* Menšie padding a zaoblenie */}
+                  {customerName}
+                </div>
+              </div>
+              <div>
+                <label className="block ml-1 font-bold text-white text-sm">Adresa:</label> {/* Zmenšený margin a písmo */}
+                <div className="bg-white block w-full mt-1 p-1 pl-2 rounded-xl shadow-md text-xs">
+                  {customerAddress}
+                </div>
+              </div>
+              <div>
+                <label className="block ml-1 font-bold text-white text-sm">Email:</label> {/* Zmenšený margin a písmo */}
+                <div className="bg-white block w-full mt-1 p-1 pl-2 rounded-xl shadow-md text-xs">
+                  {customerEmail}
+                </div>
+              </div>
+              <div>
+                <label className="block ml-1 font-bold text-white text-sm">Telefón:</label> {/* Zmenšený margin a písmo */}
+                <div className="bg-white block w-full mt-1 p-1 pl-2 rounded-xl shadow-md mb-1 text-xs">
+                  {customerPhone}
+                </div>
+              </div>
+            </div>
 
-          {/* Billing Details Form */}
-          <div className="mb-4">
-            <label className="block mb-2">
-              Meno a priezvisko:
-              <input
-                type="text"
-                className="block w-full mt-1 p-2 border rounded"
-                value={customerName}
-                onChange={(e) => setCustomerName(e.target.value)}
-              />
-            </label>
-            <label className="block mb-2">
-              Adresa:
-              <input
-                type="text"
-                className="block w-full mt-1 p-2 border rounded"
-                value={customerAddress}
-                onChange={(e) => setCustomerAddress(e.target.value)}
-              />
-            </label>
-            <label className="block mb-2">
-              Email:
-              <input
-                type="email"
-                className="block w-full mt-1 p-2 border rounded"
-                value={customerEmail}
-                onChange={(e) => setCustomerEmail(e.target.value)}
-              />
-            </label>
-            <label className="block mb-2">
-              Telefón:
-              <input
-                type="tel"
-                className="block w-full mt-1 p-2 border rounded"
-                value={customerPhone}
-                onChange={(e) => setCustomerPhone(e.target.value)}
-              />
-            </label>
+            <h2 className="text-lg font-bold mb-1 pl-3">Údaje dodávateľa:</h2> {/* Zmenšené písmo a padding */}
+
+            <div className='bg-customPurple rounded-[30px] p-2 mx-auto grid grid-cols-2 gap-2'> {/* Menšie zaoblenie, padding, a medzera */}
+              <div>
+                <label className="block ml-1 font-bold text-white text-sm">Názov dodávateľa:</label> {/* Zmenšený margin a písmo */}
+                <div className="bg-white block w-full mt-1 p-1 pl-2 rounded-xl shadow-md text-xs">
+                  {entrepreneur.companyName}
+                </div>
+              </div>
+              <div>
+                <label className="block ml-1 font-bold text-white text-sm">Adresa:</label> {/* Zmenšený margin a písmo */}
+                <div className="bg-white block w-full mt-1 p-1 pl-2 rounded-xl shadow-md text-xs">
+                  {entrepreneur.address}
+                </div>
+              </div>
+              <div>
+                <label className="block ml-1 font-bold text-white text-sm">Email:</label> {/* Zmenšený margin a písmo */}
+                <div className="bg-white block w-full mt-1 p-1 pl-2 rounded-xl shadow-md text-xs">
+                  {entrepreneur.email}
+                </div>
+              </div>
+              <div>
+                <label className="block ml-1 font-bold text-white text-sm">Telefón:</label> {/* Zmenšený margin a písmo */}
+                <div className="bg-white block w-full mt-1 p-1 pl-2 rounded-xl shadow-md mb-1 text-xs">
+                  {entrepreneur.phoneNumber}
+                </div>
+              </div>
+            </div>
+
+            <h2 className="font-bold text-lg mb-1 pl-3">Platobné údaje</h2> {/* Zmenšené písmo a padding */}
+
+            {/* Payment Details Placeholder */}
+            <div className='bg-customPurple rounded-[30px] p-3 mx-auto flex flex-col grid-rows-2'>
+              <div className="bg-white block w-full mt-1 p-1 pl-2 rounded-3xl shadow-lg mb-1 text-xs">
+                Platobná brána ešte nie je implementovaná.
+              </div>
+            </div>
+            <div className="mt-2 mx-8 flex justify-between">
+              <button
+                className="bg-gray-500 text-white px-4 py-2 rounded-3xl"
+                onClick={handlePreviousStep}
+              >
+                Späť
+              </button>
+              <button
+                className="bg-customPurpleNavbar text-white px-4 py-2 rounded-3xl"
+                onClick={handleFinish}
+              >
+                Dokončiť a pokračovať k platbe
+              </button>
+            </div>
           </div>
 
-          <h2 className="text-xl font-bold mb-4">Údaje dodávateľa</h2>
+          {/* Right Part */}
+          <div className="w-[35%] pl-4 bg-customSideBar rounded-[40px] p-3">
+            <h2 className="text-lg font-bold mb-1 ">Zúčtovanie</h2>
+            <div className="mb-2">
+              <h3 className="font-bold pl-2 text-sm">Služby:</h3>
+              <div className='bg-white rounded-3xl p-2'>
+                <ul className="list-disc pl-4 text-xs">
+                  {selectedServices.map((s) => (
+                    <li key={s.id}>
+                      {s.name} - <span className="font-bold text-xs">{s.price}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <div className="mb-2">
+              <p className='font-bold mb-1 pl-2 text-sm'>Vybraný cintorín:</p>
+              <div className="bg-white block w-auto px-3 p-1 pl-2 rounded-3xl shadow-lg mb-2 text-center font-bold text-sm">
+                {selectedCemeteryData ? `${selectedCemeteryData.name}` : "Žiadny cintorín nebol vybraný"}
+              </div>
+            </div>
 
-          {/* Supplier Details */}
-          <div className="mb-4">
-            <p>
-              <strong>Názov:</strong> {entrepreneur.name}
-            </p>
-            <p>
-              <strong>Adresa:</strong> {entrepreneur.address}
-            </p>
-            <p>
-              <strong>Email:</strong> {entrepreneur.email}
-            </p>
-            <p>
-              <strong>Telefón:</strong> {entrepreneur.phone}
-            </p>
-          </div>
+            <div className="mb-2">
+              <p className='font-bold pl-2 mb-1 text-sm'> Termín dokončenia do:</p>
+              <div className="bg-white block w-auto px-3 p-1 pl-2 rounded-3xl shadow-lg mb-2 text-center font-bold text-sm">
+                {deadline.toLocaleDateString()}
+              </div>
+              <p className='text-center text-xs text-gray-700 px-2 '>*Termin dokoncenia budete mat presne urcený po potvdeni dodavatelom. Termin nepresiahne vami urceny deadline.</p>
+            </div>
 
-          {/* Payment Details Placeholder */}
-          <h2 className="text-xl font-bold mb-4">Platobné údaje</h2>
-          <p>Platobná brána ešte nie je implementovaná.</p>
+            <div className="flex justify-between items-center mb-2 bg-white p-1 rounded-3xl">
+              {/* Ľavá strana s textom */}
+              <div className="text-left font-bold pl-2 text-sm">
+                <p>Celková cena:</p>
+              </div>
 
-          {/* Buttons */}
-          <div className="mt-4 flex justify-between">
-            <button
-              className="bg-gray-500 text-white px-4 py-2 rounded"
-              onClick={handlePreviousStep}
-            >
-              Späť
-            </button>
-            <button
-              className="bg-purple-500 text-white px-4 py-2 rounded"
-              onClick={handleFinish}
-            >
-              Dokončiť
-            </button>
-          </div>
-        </div>
+              {/* Pravá strana s cenou */}
+              <div className="bg-customPurple block w-auto px-4 py-1 rounded-3xl shadow-lg text-white text-center font-bold text-sm">
+                {totalPrice} EUR
+              </div>
+            </div>
 
-        {/* Right Part */}
-        <div className="w-[30%] pl-4">
-          <h2 className="text-xl font-bold mb-4">Zúčtovanie</h2>
-          <div className="mb-4">
-            <h3 className="font-bold">Služby:</h3>
-            <ul className="list-disc pl-5">
-              {selectedServices.map((s) => (
-                <li key={s.id}>
-                  {s.name} - {s.price}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="mb-4">
-            <p>
-              <strong>Termín dokončenia:</strong> {deadline.toLocaleDateString()}
-            </p>
-          </div>
-          <div className="mb-4">
-            <p>
-              <strong>Celková cena:</strong> {totalPrice} EUR
-            </p>
           </div>
         </div>
       </div>

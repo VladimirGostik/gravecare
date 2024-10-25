@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Header, Hero, HowItWorks, BecomePart } from '../Components/MainPageComponents';
+import { Header, Hero, HowItWorks, BecomePart, HowItWorks2 } from '../Components/MainPageComponents';
 import Footer from "../Components/Footer";
 import LoginModal from '../Modals/LoginModal';
 import RegisterModal from '../Modals/RegisterModal';
@@ -48,31 +48,37 @@ const Hlavnastranka = () => {
     return (
         <div className="bg-customDark min-h-screen">
             <div className="w-full bg-customDark">
-                <div className="max-w-screen-lg mx-auto px-4">
+                <div className="">
                     <Header onLoginClick={openLoginModal} onRegisterClick={openRegisterModal} />
                 </div>
             </div>
 
-            <div className="w-full bg-customDark">
+            <div className="w-full min-h-screen bg-customDark">
                 <div className="max-w-screen-lg mx-auto px-4">
                     <Hero />
                 </div>
             </div>
 
-            <div className="w-full bg-purple-700">
+            <div className="w-full min-h-screen bg-purple-700">
                 <div className="max-w-screen-lg mx-auto px-4">
                     <HowItWorks />
                 </div>
             </div>
 
-            <div className="w-full bg-purple-600">
+            <div className="w-full min-h-screen bg-customDark">
                 <div className="max-w-screen-lg mx-auto px-4">
-                    <BecomePart />
+                    <HowItWorks2 />
                 </div>
             </div>
 
-            <div className="w-full bg-customDark">
+            <div className="w-full min-h-screen bg-purple-100">
                 <div className="max-w-screen-lg mx-auto px-4">
+                    <BecomePart onRegisterClick={openRegisterModal}/>
+                </div>
+            </div>
+
+            <div className="w-full bg-customDark ">
+                <div className="max-w-screen-xl mx-auto px-4">
                     <Footer />
                 </div>
             </div>
