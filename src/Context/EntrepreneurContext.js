@@ -18,6 +18,8 @@ export const EntrepreneurProvider = ({ children }) => {
       companyLogo: null, 
       companyName: 'Cintorínske služby',
       phoneNumber: "987-654-3210",
+      address: "adresa adresa 123/123",
+      email: "example@example.com",
       description: "Navigačné tlačidlá: Tieto tlačidlá umožňujú používateľovi presunúť sa medzi sekciami Portfólio služieb a Ponuka služieb s plynulým posunom (scroll). Aktívna sekcia má iné zafarbenie pre lepšiu používateľskú skúsenosť.",
       averageRating: 4.5, 
       services: services
@@ -32,6 +34,8 @@ export const EntrepreneurProvider = ({ children }) => {
       companyLogo: null,
       companyName: 'Záhradnícke práce', 
       phoneNumber: "987-654-3210",
+      address: "adresa adresa 123/123",
+      email: "example@example.com",
       description: "Navigačné tlačidlá: Tieto tlačidlá umožňujú používateľovi presunúť sa medzi sekciami Portfólio služieb a Ponuka služieb s plynulým posunom (scroll). Aktívna sekcia má iné zafarbenie pre lepšiu používateľskú skúsenosť.",
       averageRating: 4.2, 
       services: services
@@ -46,6 +50,8 @@ export const EntrepreneurProvider = ({ children }) => {
       companyLogo: null,
       companyName: 'Oprava náhrobkova',
       phoneNumber: "987-654-3210",
+      address: "adresa adresa 123/123",
+      email: "example@example.com",
       description: "Navigačné tlačidlá: Tieto tlačidlá umožňujú používateľovi presunúť sa medzi sekciami Portfólio služieb a Ponuka služieb s plynulým posunom (scroll). Aktívna sekcia má iné zafarbenie pre lepšiu používateľskú skúsenosť.",
       averageRating: 4.8, 
       services: services
@@ -60,6 +66,8 @@ export const EntrepreneurProvider = ({ children }) => {
       companyLogo: null,
       companyName: 'Výzdoba hrobov',
       phoneNumber: "987-654-3210",
+      address: "adresa adresa 123/123",
+      email: "example@example.com",
       description: "Navigačné tlačidlá: Tieto tlačidlá umožňujú používateľovi presunúť sa medzi sekciami Portfólio služieb a Ponuka služieb s plynulým posunom (scroll). Aktívna sekcia má iné zafarbenie pre lepšiu používateľskú skúsenosť.",
       averageRating: 4.7, 
       services: services
@@ -74,6 +82,8 @@ export const EntrepreneurProvider = ({ children }) => {
       companyLogo: null,
       companyName: 'Údržba pomníkov', 
       phoneNumber: "987-654-3210",
+      address: "adresa adresa 123/123",
+      email: "example@example.com",
       description: "Navigačné tlačidlá: Tieto tlačidlá umožňujú používateľovi presunúť sa medzi sekciami Portfólio služieb a Ponuka služieb s plynulým posunom (scroll). Aktívna sekcia má iné zafarbenie pre lepšiu používateľskú skúsenosť.",
       averageRating: 4.9, 
       services: services
@@ -88,6 +98,8 @@ export const EntrepreneurProvider = ({ children }) => {
       companyLogo: null,
       companyName: 'Kamenárske služby', 
       phoneNumber: "987-654-3210",
+      address: "adresa adresa 123/123",
+      email: "example@example.com",
       description: "Navigačné tlačidlá: Tieto tlačidlá umožňujú používateľovi presunúť sa medzi sekciami Portfólio služieb a Ponuka služieb s plynulým posunom (scroll). Aktívna sekcia má iné zafarbenie pre lepšiu používateľskú skúsenosť.",
       averageRating: 4.1, 
       services: services
@@ -102,6 +114,8 @@ export const EntrepreneurProvider = ({ children }) => {
       companyLogo: null,
       companyName: 'Starostlivosť o hroby',
       phoneNumber: "987-654-3210",
+      address: "adresa adresa 123/123",
+      email: "example@example.com",
       description: "Navigačné tlačidlá: Tieto tlačidlá umožňujú používateľovi presunúť sa medzi sekciami Portfólio služieb a Ponuka služieb s plynulým posunom (scroll). Aktívna sekcia má iné zafarbenie pre lepšiu používateľskú skúsenosť.",
       averageRating: 4.6, 
       services: services
@@ -116,6 +130,8 @@ export const EntrepreneurProvider = ({ children }) => {
       companyLogo: null,
       companyName: 'Pomníkové práce', 
       phoneNumber: "987-654-3210",
+      address: "adresa adresa 123/123",
+      email: "example@example.com",
       description: "Navigačné tlačidlá: Tieto tlačidlá umožňujú používateľovi presunúť sa medzi sekciami Portfólio služieb a Ponuka služieb s plynulým posunom (scroll). Aktívna sekcia má iné zafarbenie pre lepšiu používateľskú skúsenosť.",
       averageRating: 4.3, 
       services: services
@@ -130,6 +146,8 @@ export const EntrepreneurProvider = ({ children }) => {
       companyLogo: null,
       companyName: 'Záhradnícke úpravy', 
       phoneNumber: "987-654-3210",
+      address: "adresa adresa 123/123",
+      email: "example@example.com",
       description: "Navigačné tlačidlá: Tieto tlačidlá umožňujú používateľovi presunúť sa medzi sekciami Portfólio služieb a Ponuka služieb s plynulým posunom (scroll). Aktívna sekcia má iné zafarbenie pre lepšiu používateľskú skúsenosť.",
       averageRating: 4.0, 
       services: services
@@ -144,6 +162,8 @@ export const EntrepreneurProvider = ({ children }) => {
       companyLogo: null,
       companyName: 'Komplexná starostlivosť', 
       phoneNumber: "987-654-3210",
+      address: "adresa adresa 123/123",
+      email: "example@example.com",
       description: "Navigačné tlačidlá: Tieto tlačidlá umožňujú používateľovi presunúť sa medzi sekciami Portfólio služieb a Ponuka služieb s plynulým posunom (scroll). Aktívna sekcia má iné zafarbenie pre lepšiu používateľskú skúsenosť.",
       averageRating: 4.4, 
       services: services

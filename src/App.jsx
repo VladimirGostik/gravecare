@@ -19,6 +19,11 @@ import { ServiceProvider } from './Context/ServiceContext';
 import { SettingsProvider } from './Context/SettingsContext'; // Importujte váš SettingsContext
 import { EntrepreneurProvider } from './Context/EntrepreneurContext';
 import OrdersCustomer from './Pages/OrdersCustomer';
+import About from './Pages/FooterLinks/About';
+import Services from './Pages/FooterLinks/Services';
+import Contact from './Pages/FooterLinks/Contact';
+import Terms from './Pages/FooterLinks/Terms';
+import Privacy from './Pages/FooterLinks/Privacy';
 
 function App() {
   return (
@@ -31,6 +36,14 @@ function App() {
                 <Routes>
                   {/* Verejná stránka */}
                   <Route path="/" element={<HlavnaStranka />} />
+                  
+                  {/* Footer Linky */}
+                  <Route path="/about" element={<About />} />
+                  <Route path="/services" element={<Services />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/terms" element={<Terms />} />
+                  <Route path="/privacy" element={<Privacy />} />
+
 
                   {/* Login stránka */}
                   <Route

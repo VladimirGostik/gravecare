@@ -68,3 +68,15 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+********************************************************************************************************************************************************************************
+{na develop pridat dependences}: 
+
+npm install @fortawesome/fontawesome-free
+npm install webpack@^5.0.0 --save-dev
+npm install @pmmmwh/react-refresh-webpack-plugin babel-loader webpack --save-dev
+npm uninstall html-webpack-plugin
+npm install html-webpack-plugin@4 --save-dev
+rm -rf node_modules package-lock.json
+npm install
+npm audit fix
